@@ -664,6 +664,12 @@ def _try_get_loci() -> jpype.JPackage:
         scyjava.config.endpoints.append("ome:formats-gpl:6.7.0")
         scyjava.start_jvm()
         loci = jpype.JPackage("loci")
+	# get DebugTools, which is the logging library used by bioformats
+        DebugTools = loci.common.DebugTools
+         # Set Log Level to Error
+        DebugTools.setRootLevel("Error")
+
+
         return loci
     except jpype.JVMNotFoundException as e:
         raise RuntimeError(JAVA_ERROR_MSG) from e
